@@ -3,16 +3,20 @@
 
 require 'google/protobuf'
 
+require 'github.com/gogo/protobuf/gogoproto/gogo_pb'
+
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "diego.bbs.models.PingResponse" do
-    optional :available, :bool, 1
+  add_file("ping.proto", :syntax => :proto3) do
+    add_message "diego.bbs.models.PingResponse" do
+      optional :available, :bool, 1
+    end
   end
 end
 
 module Diego
   module Bbs
     module Models
-      PingResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("diego.bbs.models.PingResponse").msgclass
+      PingResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("diego.bbs.models.PingResponse").msgclass
     end
   end
 end

@@ -3,17 +3,21 @@
 
 require 'google/protobuf'
 
+require 'github.com/gogo/protobuf/gogoproto/gogo_pb'
+
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "diego.bbs.models.ModificationTag" do
-    optional :epoch, :string, 1
-    optional :index, :uint32, 2
+  add_file("modification_tag.proto", :syntax => :proto3) do
+    add_message "diego.bbs.models.ModificationTag" do
+      optional :epoch, :string, 1
+      optional :index, :uint32, 2
+    end
   end
 end
 
 module Diego
   module Bbs
     module Models
-      ModificationTag = Google::Protobuf::DescriptorPool.generated_pool.lookup("diego.bbs.models.ModificationTag").msgclass
+      ModificationTag = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("diego.bbs.models.ModificationTag").msgclass
     end
   end
 end

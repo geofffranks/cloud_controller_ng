@@ -3,17 +3,21 @@
 
 require 'google/protobuf'
 
+require 'github.com/gogo/protobuf/gogoproto/gogo_pb'
+
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "diego.bbs.models.EnvironmentVariable" do
-    optional :name, :string, 1
-    optional :value, :string, 2
+  add_file("environment_variables.proto", :syntax => :proto3) do
+    add_message "diego.bbs.models.EnvironmentVariable" do
+      optional :name, :string, 1
+      optional :value, :string, 2
+    end
   end
 end
 
 module Diego
   module Bbs
     module Models
-      EnvironmentVariable = Google::Protobuf::DescriptorPool.generated_pool.lookup("diego.bbs.models.EnvironmentVariable").msgclass
+      EnvironmentVariable = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("diego.bbs.models.EnvironmentVariable").msgclass
     end
   end
 end
