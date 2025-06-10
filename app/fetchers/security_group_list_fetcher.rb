@@ -38,6 +38,11 @@ module VCAP::CloudController
 
         dataset = dataset.where(staging_default: ActiveModel::Type::Boolean.new.cast(message.globally_enabled_staging)) if message.requested?(:globally_enabled_staging)
 
+        if message.requested?(:space_guids)
+          space_dataset = Space.where(guid: message.space_guids)
+          dataset = dataset.where(staging_spaces: space_dataset).or(spaces: space_dataset).or(running_default: true).or(staging_default: true)
+        end
+
         super(message, dataset, SecurityGroup)
       end
     end
